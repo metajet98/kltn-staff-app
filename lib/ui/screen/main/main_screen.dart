@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:staff_maintenance_app/ui/screen/maintenance/input_user_vehicle/input_user_vehicle_screen.dart';
+import 'package:staff_maintenance_app/ui/screen/maintenance/input_user_vehicle/input_user_vehicle_bottom_sheet.dart';
 import 'package:staff_maintenance_app/ui/screen/profile/profile_screen.dart';
 
 class MainScreen extends BaseView<MainScreenModel> {
@@ -16,7 +16,7 @@ class MainScreen extends BaseView<MainScreenModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.settings_sharp), onPressed: () => Get.to(InputUserVehicleScreen())),
+      floatingActionButton: FloatingActionButton(child: Icon(Icons.settings_sharp), onPressed: () => Get.bottomSheet(InputUserVehicleBottomSheet(), isScrollControlled: true)),
       body: SafeArea(
         child: PageView(
           onPageChanged: viewModel.onPageViewSnap,

@@ -9,7 +9,7 @@ part of 'maintenance_service.dart';
 class _MaintenanceService implements MaintenanceService {
   _MaintenanceService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'http://192.168.0.101:5001/api/maintenance';
+    baseUrl ??= 'http://192.168.0.100:5001/api/maintenance';
   }
 
   final Dio _dio;
@@ -17,9 +17,13 @@ class _MaintenanceService implements MaintenanceService {
   String baseUrl;
 
   @override
-  Future<ArrayResponse<Maintenance>> getAllMaintenance({userVehicleId}) async {
+  Future<ArrayResponse<Maintenance>> getAllMaintenance(
+      {userVehicleId, staffId}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'userVehicleId': userVehicleId};
+    final queryParameters = <String, dynamic>{
+      r'userVehicleId': userVehicleId,
+      r'staffId': staffId
+    };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>('',

@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:staff_maintenance_app/generated/assets.gen.dart';
-import 'package:staff_maintenance_app/models/vehicle/vehicle.dart';
-import 'package:staff_maintenance_app/ui/screen/maintenance/user_vehicle_info/user_vehicle_detail_screen.dart';
+import 'package:staff_maintenance_app/ui/base/base_view.dart';
+import 'package:staff_maintenance_app/ui/screen/maintenance/input_user_vehicle/input_user_vehicle_bottom_sheet_model.dart';
 
-class FindUserVehicleResultBottomSheet extends StatelessWidget {
-  final Vehicle vehicle;
-
-  const FindUserVehicleResultBottomSheet({Key key, this.vehicle}) : super(key: key);
+class InputUserVehicleBottomSheet extends BaseView<InputUserVehicleBottomSheetModel> {
+  final inputController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +26,19 @@ class FindUserVehicleResultBottomSheet extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Tìm thấy xe trong hệ thống",
+                      "Tìm xe",
                       style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 32),
-                    Text("Biển số: ${vehicle.plateNumber}"),
-                    SizedBox(height: 8),
-                    Text("Chủ xe: ${vehicle.user?.fullName ?? ""}"),
-                    SizedBox(height: 16),
+                    TextField(
+                      controller: inputController,
+                      decoration: InputDecoration(
+                        labelText: "Biển số xe",
+                        hintText: "Nhập biển số xe",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.grey))),
+                    ),
+                    SizedBox(height: 32),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -44,15 +47,14 @@ class FindUserVehicleResultBottomSheet extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           onPressed: () {
-                            Get.back();
-                            Get.to(UserVehicleDetailScreen(userVehicleId: vehicle.id));
+                            viewModel.findUserVehicle(inputController.text);
                           },
                           child: Padding(
-                              padding: EdgeInsets.all(12),
-                              child: Text(
-                                "Tiếp tục",
-                                style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
-                              )),
+                            padding: EdgeInsets.all(12),
+                            child: Text(
+                              "Tìm",
+                              style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+                            )),
                           color: Colors.green,
                         ),
                         SizedBox(width: 16),
@@ -62,11 +64,11 @@ class FindUserVehicleResultBottomSheet extends StatelessWidget {
                           ),
                           onPressed: () => Get.back(),
                           child: Padding(
-                              padding: EdgeInsets.all(12),
-                              child: Text(
-                                "Huỷ",
-                                style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
-                              )),
+                            padding: EdgeInsets.all(12),
+                            child: Text(
+                              "Huỷ",
+                              style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
+                            )),
                           color: Colors.white,
                         ),
                       ],

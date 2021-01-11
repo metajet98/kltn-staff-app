@@ -17,7 +17,7 @@ abstract class MaintenanceService {
   factory MaintenanceService() => _MaintenanceService(locator<HttpClient>().dio);
 
   @GET("")
-  Future<ArrayResponse<Maintenance>> getAllMaintenance({@Query("userVehicleId") int userVehicleId});
+  Future<ArrayResponse<Maintenance>> getAllMaintenance({@Query("userVehicleId") int userVehicleId, @Query("staffId") int staffId});
 
   @GET("/{maintenanceId}")
   Future<ObjectResponse<Maintenance>> getMaintenance({@Path("maintenanceId") int maintenanceId});

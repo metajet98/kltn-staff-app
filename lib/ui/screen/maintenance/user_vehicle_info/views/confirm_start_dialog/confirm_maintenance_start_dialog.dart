@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:staff_maintenance_app/constaints/constaints.dart';
+import 'package:staff_maintenance_app/models/maintenance/maintenance.dart';
 import 'package:staff_maintenance_app/ui/base/base_view.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/user_vehicle_info/views/confirm_start_dialog/confirm_maintenance_start_dialog_model.dart';
 
 class ConfirmMaintenanceStartDialog extends BaseView<ConfirmMaintenanceStartDialogModel> {
-  ConfirmMaintenanceStartDialog({int maintenanceId}) {
-    viewModel.maintenanceId = maintenanceId;
+  ConfirmMaintenanceStartDialog({Maintenance maintenance}) {
+    viewModel.maintenance = maintenance;
   }
 
   @override
@@ -27,7 +29,7 @@ class ConfirmMaintenanceStartDialog extends BaseView<ConfirmMaintenanceStartDial
             ),
             SizedBox(height: 16),
             Text(
-              "Bạn có chắc chắn muốn tiến hành bản dưỡng?",
+              getDialogMessage(),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 32),
@@ -67,5 +69,17 @@ class ConfirmMaintenanceStartDialog extends BaseView<ConfirmMaintenanceStartDial
         ),
       ),
     );
+  }
+
+
+  String getDialogMessage() {
+    switch(viewModel.maintenance.status) {
+      case maintenanceCreated:
+        return "Bạn có chắc chắn muốn bắt đầu tiến hành bản dưỡng?";
+      case underMaintenance:
+        return "Bạn có chắc chắn muốn tiếp tục tiến hành bản dưỡng?";
+      default:
+        return "";
+  }
   }
 }

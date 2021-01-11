@@ -8,8 +8,9 @@ import 'package:staff_maintenance_app/ui/screen/maintenance/user_vehicle_info/vi
 
 class MaintenanceHistoryItemView extends StatelessWidget {
   final Maintenance maintenance;
+  final bool isHistory;
 
-  const MaintenanceHistoryItemView({Key key, this.maintenance}) : super(key: key);
+  const MaintenanceHistoryItemView({Key key, this.maintenance, this.isHistory = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +21,10 @@ class MaintenanceHistoryItemView extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          if (true) { //maintenance.status == maintenanceCreated) {
-            Get.dialog(ConfirmMaintenanceStartDialog(maintenanceId: maintenance.id,));
+          if (maintenance.status == maintenanceCreated || maintenance.status == underMaintenance) {
+            Get.dialog(ConfirmMaintenanceStartDialog(
+              maintenance: maintenance,
+            ));
           }
         },
         child: Padding(
@@ -34,7 +37,7 @@ class MaintenanceHistoryItemView extends StatelessWidget {
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 4),
-              Text(maintenance.branch?.name),
+              isHistory ? Text("Biển số: ${maintenance?.userVehicle?.plateNumber}") : Text(maintenance.branch?.name),
               SizedBox(height: 4),
               Row(
                 children: [
@@ -58,25 +61,28 @@ class MaintenanceHistoryItemView extends StatelessWidget {
   }
 
   _buildStatusText(int status) {
-    switch(status) {
-      case maintenanceCreated: {
-        return Text(
-          "Mới nhận xe",
-          style: TextStyle(fontSize: 12, color: Colors.grey),
-        );
-      }
-      case underMaintenance: {
-        return Text(
-          "Đang bảo dưỡng",
-          style: TextStyle(fontSize: 12, color: Colors.red),
-        );
-      }
-      case maintenanceFinish: {
-        return Text(
-          "Kết thúc",
-          style: TextStyle(fontSize: 12, color: Colors.green),
-        );
-      }
+    switch (status) {
+      case maintenanceCreated:
+        {
+          return Text(
+            "Mới nhận xe",
+            style: TextStyle(fontSize: 12, color: Colors.grey),
+          );
+        }
+      case underMaintenance:
+        {
+          return Text(
+            "Đang bảo dưỡng",
+            style: TextStyle(fontSize: 12, color: Colors.red),
+          );
+        }
+      case maintenanceFinish:
+        {
+          return Text(
+            "Kết thúc",
+            style: TextStyle(fontSize: 12, color: Colors.green),
+          );
+        }
     }
   }
 }

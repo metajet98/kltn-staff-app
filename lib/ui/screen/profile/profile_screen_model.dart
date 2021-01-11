@@ -22,8 +22,10 @@ class ProfileScreenModel extends BaseViewModel<ProfileScreen> {
     super.onInit();
   }
 
-  Future loadUser() async {
-    _profile.value = (await userService.self()).data;
+  Future loadUser({bool showLoading = true}) async {
+    call(() async {
+      _profile.value = (await userService.self()).data;
+    }, toastOnError: true, background: !showLoading);
   }
 
   void logout() {

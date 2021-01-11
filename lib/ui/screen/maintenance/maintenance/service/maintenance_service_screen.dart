@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:staff_maintenance_app/constaints/constaints.dart';
 import 'package:staff_maintenance_app/ui/base/base_view.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/service/maintenance_service_screen_model.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/service/views/add_service_bottom_sheet.dart';
@@ -18,6 +17,7 @@ class MaintenanceServiceScreen extends BaseView<MaintenanceServiceScreenModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
         onPressed: () => Get.bottomSheet(
           AddServiceBottomSheet(
             onConfirm: (serviceId, quantity) => viewModel.onAddService(serviceId, quantity),

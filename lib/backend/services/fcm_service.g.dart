@@ -9,7 +9,7 @@ part of 'fcm_service.dart';
 class _FcmService implements FcmService {
   _FcmService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'http://192.168.0.101:5001/api/fcm';
+    baseUrl ??= 'http://192.168.0.100:5001/api/fcm';
   }
 
   final Dio _dio;

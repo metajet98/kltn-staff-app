@@ -9,7 +9,7 @@ part of 'branch_service.dart';
 class _BranchService implements BranchService {
   _BranchService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'http://192.168.0.101:5001/api/branch';
+    baseUrl ??= 'http://192.168.0.100:5001/api/branch';
   }
 
   final Dio _dio;

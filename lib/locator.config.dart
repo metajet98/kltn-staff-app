@@ -17,7 +17,7 @@ import 'backend/services/fcm_service.dart';
 import 'storage/fcm_token_storage.dart';
 import 'ui/screen/history/history_screen_model.dart';
 import 'backend/http_client.dart';
-import 'ui/screen/maintenance/input_user_vehicle/input_user_vehicle_screen_model.dart';
+import 'ui/screen/maintenance/input_user_vehicle/input_user_vehicle_bottom_sheet_model.dart';
 import 'ui/screen/login/login_screen_model.dart';
 import 'ui/screen/main/main_screen_model.dart';
 import 'ui/screen/maintenance/maintenance/schedule/maintenance_schedule_screen_model.dart';
@@ -27,6 +27,7 @@ import 'ui/screen/profile/profile_screen_model.dart';
 import 'ui/screen/maintenance/maintenance/receive/receive_vehicle_screen_model.dart';
 import 'ui/screen/maintenance/maintenance/sparepart_check/sparepart_check_screen_model.dart';
 import 'ui/screen/spash/splash_screen_model.dart';
+import 'storage/user_storage.dart';
 import 'backend/services/user_service.dart';
 import 'ui/screen/maintenance/user_vehicle_info/user_vehicle_detail_screen_model.dart';
 import 'backend/services/utils_service.dart';
@@ -48,20 +49,23 @@ GetIt $initGetIt(
   gh.lazySingleton<FcmService>(() => FcmService());
   gh.lazySingleton<FcmTokenStorage>(
       () => FcmTokenStorage(get<SharedPreferences>()));
-  gh.factory<HistoryScreenModel>(() => HistoryScreenModel());
   gh.lazySingleton<HttpClient>(() => HttpClient());
-  gh.factory<LoginScreenModel>(() => LoginScreenModel());
   gh.lazySingleton<MainScreenModel>(() => MainScreenModel());
   gh.lazySingleton<MaintenanceService>(() => MaintenanceService());
   gh.factory<SplashScreenModel>(
       () => SplashScreenModel(get<FcmManager>(), get<AuthManager>()));
+  gh.lazySingleton<UserIdStorage>(
+      () => UserIdStorage(get<SharedPreferences>()));
   gh.lazySingleton<UserService>(() => UserService());
   gh.lazySingleton<UtilsService>(() => UtilsService());
   gh.lazySingleton<VehicleService>(() => VehicleService());
   gh.factory<ConfirmMaintenanceStartDialogModel>(
       () => ConfirmMaintenanceStartDialogModel(get<MaintenanceService>()));
-  gh.factory<InputUserVehicleScreenModel>(
-      () => InputUserVehicleScreenModel(get<VehicleService>()));
+  gh.factory<HistoryScreenModel>(
+      () => HistoryScreenModel(get<MaintenanceService>()));
+  gh.factory<InputUserVehicleBottomSheetModel>(
+      () => InputUserVehicleBottomSheetModel(get<VehicleService>()));
+  gh.factory<LoginScreenModel>(() => LoginScreenModel(get<UserService>()));
   gh.factory<MaintenanceScheduleScreenModel>(
       () => MaintenanceScheduleScreenModel(get<MaintenanceService>()));
   gh.factory<MaintenanceServiceScreenModel>(() => MaintenanceServiceScreenModel(

@@ -37,13 +37,14 @@ class ReceiveVehicleScreen extends BaseView<ReceiveVehicleScreenModel> {
                   SizedBox(width: 16),
                   Expanded(
                     child: TextField(
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) { viewModel.title = value; },
+                      onChanged: (value) {
+                        viewModel.title = value;
+                      },
                       decoration: InputDecoration(
                         hintText: "Bảo dưỡng định kì",
                         contentPadding: EdgeInsets.symmetric(horizontal: 16),
                         border: OutlineInputBorder(gapPadding: 0, borderRadius: BorderRadius.circular(10)),
-                        suffix: Text("Km")),
+                      ),
                     ),
                   )
                 ],
@@ -116,7 +117,9 @@ class ReceiveVehicleScreen extends BaseView<ReceiveVehicleScreenModel> {
                   SizedBox(width: 16),
                   Expanded(
                     child: TextField(
-                      onChanged: (value) { viewModel.odometer = int.tryParse(value); },
+                      onChanged: (value) {
+                        viewModel.odometer = int.tryParse(value);
+                      },
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(horizontal: 16),
@@ -130,7 +133,9 @@ class ReceiveVehicleScreen extends BaseView<ReceiveVehicleScreenModel> {
               Text("Ghi chú thêm:"),
               SizedBox(height: 8),
               TextField(
-                onChanged: (value) { viewModel.notes = value; },
+                onChanged: (value) {
+                  viewModel.notes = value;
+                },
                 minLines: 3,
                 maxLines: 10,
                 decoration: InputDecoration(

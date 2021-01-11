@@ -25,7 +25,6 @@ class UserVehicleDetailScreen extends BaseView<UserVehicleDetailScreenModel> {
               viewModel.userVehicle?.name ?? viewModel.userVehicle?.vehicleGroup?.name ?? "Thông tin xe khách hàng",
               style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
             )),
-        actions: [IconButton(icon: Icon(FontAwesome.bell, color: Colors.grey), onPressed: () {})],
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -101,11 +100,14 @@ class UserVehicleDetailScreen extends BaseView<UserVehicleDetailScreenModel> {
           ),
           Obx(
             () => Expanded(
-              child: EasyListView(
-                padding: EdgeInsets.all(16),
-                itemCount: viewModel.maintenances?.length ?? 0,
-                itemBuilder: (ctx, index) => MaintenanceHistoryItemView(maintenance: viewModel.maintenances[index]),
-                dividerBuilder: (ctx, index) => SizedBox(height: 16),
+              child: RefreshIndicator(
+                onRefresh: () => viewModel.loadData(showLoading: false),
+                child: EasyListView(
+                  padding: EdgeInsets.all(16),
+                  itemCount: viewModel.maintenances?.length ?? 0,
+                  itemBuilder: (ctx, index) => MaintenanceHistoryItemView(maintenance: viewModel.maintenances[index]),
+                  dividerBuilder: (ctx, index) => SizedBox(height: 16),
+                ),
               ),
             ),
           ),

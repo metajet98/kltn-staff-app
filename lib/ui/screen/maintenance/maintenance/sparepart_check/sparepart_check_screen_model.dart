@@ -78,6 +78,7 @@ class SparepartCheckScreenModel extends BaseViewModel<SparepartCheckScreen> {
   void onConfirm() {
     var checkList = List<Map<String, dynamic>>();
     checkListItems.forEach((element) {
+      if(element.status == null) return;
       checkList.add(<String, dynamic> {
         "StatusId" : element.statusId,
         "VehicleSparePartId": element.sparePartItem.id
@@ -86,6 +87,7 @@ class SparepartCheckScreenModel extends BaseViewModel<SparepartCheckScreen> {
     var params = <String, dynamic> {
       "SparePartMaintenanceChecks" : checkList,
     };
+    print(params);
 
     call(() async {
       final result = await maintenanceService.updateCheckList(maintenanceId: maintenanceId, params: params);

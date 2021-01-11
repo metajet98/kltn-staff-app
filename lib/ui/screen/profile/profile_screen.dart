@@ -21,28 +21,26 @@ class ProfileScreen extends BaseView<ProfileScreenModel> {
         ],
       ),
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 16),
-                  Obx(() => Text("Tên nhân viên: ${viewModel.profile?.fullName ?? ""}")),
-                  SizedBox(height: 8),
-                  Obx(() => Text("Số điện thoại: ${viewModel.profile?.phoneNumber ?? ""}")),
-                  SizedBox(height: 8),
-                  Obx(() => Text("Địa chỉ: ${viewModel.profile?.address ?? ""}")),
-                  SizedBox(height: 8),
-                ],
-              ),
-            ),
-          ],
-        )
+      body: RefreshIndicator(
+        onRefresh: () => viewModel.loadUser(showLoading: false),
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Obx(() => Text("Mã nhân viên: ${viewModel.profile?.id ?? ""}")),
+              SizedBox(height: 8),
+              Obx(() => Text("Họ và tên: ${viewModel.profile?.fullName ?? ""}")),
+              SizedBox(height: 8),
+              Obx(() => Text("Số điện thoại: ${viewModel.profile?.phoneNumber ?? ""}")),
+              SizedBox(height: 8),
+              Obx(() => Text("Địa chỉ: ${viewModel.profile?.address ?? ""}")),
+              SizedBox(height: 8),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -9,7 +9,7 @@ part of 'utils_service.dart';
 class _UtilsService implements UtilsService {
   _UtilsService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'http://192.168.0.101:5001/api/utils';
+    baseUrl ??= 'http://192.168.0.100:5001/api/utils';
   }
 
   final Dio _dio;
