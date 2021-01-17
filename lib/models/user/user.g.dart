@@ -23,6 +23,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
         ? null
         : DateTime.parse(json['modifyDate'] as String),
     role: json['role'] as String,
+    branch: json['branch'] == null
+        ? null
+        : Branch.fromJson(json['branch'] as Map<String, dynamic>),
   );
 }
 
@@ -36,4 +39,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'createdDate': instance.createdDate?.toIso8601String(),
       'modifyDate': instance.modifyDate?.toIso8601String(),
       'role': instance.role,
+      'branch': instance.branch,
     };

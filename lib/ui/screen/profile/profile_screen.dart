@@ -17,7 +17,12 @@ class ProfileScreen extends BaseView<ProfileScreenModel> {
         elevation: 1,
         backgroundColor: Colors.white,
         actions: [
-          IconButton(icon: Icon(Icons.logout, color: Colors.red,), onPressed: viewModel.logout)
+          IconButton(
+              icon: Icon(
+                Icons.logout,
+                color: Colors.red,
+              ),
+              onPressed: viewModel.logout)
         ],
       ),
       backgroundColor: Colors.white,
@@ -25,22 +30,34 @@ class ProfileScreen extends BaseView<ProfileScreenModel> {
         onRefresh: () => viewModel.loadUser(showLoading: false),
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
-          padding: EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Obx(() => Text("Mã nhân viên: ${viewModel.profile?.id ?? ""}")),
+              _buildInfoRow(Obx(() => Text("Mã nhân viên: ${viewModel.profile?.id ?? ""}"))),
               SizedBox(height: 8),
-              Obx(() => Text("Họ và tên: ${viewModel.profile?.fullName ?? ""}")),
+              _buildInfoRow(Obx(() => Text("Họ và tên: ${viewModel.profile?.fullName ?? ""}"))),
               SizedBox(height: 8),
-              Obx(() => Text("Số điện thoại: ${viewModel.profile?.phoneNumber ?? ""}")),
+              _buildInfoRow(Obx(() => Text("Số điện thoại: ${viewModel.profile?.phoneNumber ?? ""}"))),
               SizedBox(height: 8),
-              Obx(() => Text("Địa chỉ: ${viewModel.profile?.address ?? ""}")),
+              _buildInfoRow(Obx(() => Text("Địa chỉ: ${viewModel.profile?.address ?? ""}"))),
+              SizedBox(height: 8),
+              _buildInfoRow(Obx(() => Text("Chi nhánh: ${viewModel.profile?.branch?.name ?? ""}"))),
               SizedBox(height: 8),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(Widget child) {
+    return Material(
+      borderRadius: BorderRadius.circular(5),
+      elevation: 2,
+      child: Container(
+        padding: EdgeInsets.all(16),
+        child: child,
       ),
     );
   }

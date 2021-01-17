@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:staff_maintenance_app/models/branch/branch.dart';
 
 part 'user.g.dart';
 
@@ -31,6 +32,9 @@ class User {
   @JsonKey(name: "role")
   String role;
 
+  @JsonKey(name: "branch")
+  Branch branch;
+
   User({
     this.id,
     this.fullName,
@@ -41,6 +45,7 @@ class User {
     this.createdDate,
     this.modifyDate,
     this.role,
+    this.branch,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

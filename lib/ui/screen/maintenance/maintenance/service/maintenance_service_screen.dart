@@ -17,7 +17,7 @@ class MaintenanceServiceScreen extends BaseView<MaintenanceServiceScreenModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: Colors.white,),
         onPressed: () => Get.bottomSheet(
           AddServiceBottomSheet(
             onConfirm: (serviceId, quantity) => viewModel.onAddService(serviceId, quantity),

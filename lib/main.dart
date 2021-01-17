@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staff_maintenance_app/ui/screen/main/main_screen.dart';
 import 'package:staff_maintenance_app/ui/screen/spash/splash_screen.dart';
 
 const String vi = "vi";
