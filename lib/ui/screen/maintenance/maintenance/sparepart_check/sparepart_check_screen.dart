@@ -17,6 +17,12 @@ class SparepartCheckScreen extends BaseView<SparepartCheckScreenModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          viewModel.startFlowAudio();
+        },
+        child: Icon(Icons.mic),
+      ),
       appBar: AppBar(
         elevation: 1,
         backgroundColor: Colors.white,
@@ -35,7 +41,7 @@ class SparepartCheckScreen extends BaseView<SparepartCheckScreenModel> {
           child: Column(
             children: [
               Obx(() => _buildStatusHeader(viewModel.statuses)),
-              Obx(() => Column(children: viewModel.checkListItems?.map((e) => _buildCheckListItem(e))?.toList() ?? [])),
+              Obx(() => Column(children: viewModel.checkListItems?.map((e) => _buildCheckListItem(e, viewModel.currentPositionElement == e))?.toList() ?? [])),
               Obx(() => _buildStatusDescription(viewModel.statuses)),
               SizedBox(height: 16),
               FlatButton(
@@ -50,6 +56,23 @@ class SparepartCheckScreen extends BaseView<SparepartCheckScreenModel> {
                     style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
                   )),
                 color: Colors.green,
+              ),
+              Obx(
+                  () => Container(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  color: Theme.of(context).backgroundColor,
+                  child: Center(
+                    child: viewModel.speech.value.isListening == true
+                      ? Text(
+                      "I'm listening...",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )
+                      : Text(
+                      'Not listening',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -76,25 +99,28 @@ class SparepartCheckScreen extends BaseView<SparepartCheckScreenModel> {
     return Text("Viết tắt: ${statuses?.map((e) => "${e.acronym}: ${e.name}")}");
   }
 
-  Widget _buildCheckListItem(SparePartDetail checkItem) {
-    return Row(
-      children: [
-        Text(
-          checkItem.sparePartItem.name,
-          style: TextStyle(color: Colors.black),
-        ),
-        Spacer(),
-        Row(
-          children: viewModel.statuses
-              .map(
-                (status) => Checkbox(
-                  value: checkItem.statusId == status.id,
-                  onChanged: (value) => viewModel.onValueChange(checkItem, status),
-                ),
-              )
-              .toList(),
-        )
-      ],
+  Widget _buildCheckListItem(SparePartDetail checkItem, bool isOnProcess) {
+    return Container(
+      color: isOnProcess ? Colors.grey : Colors.white,
+      child: Row(
+        children: [
+          Text(
+            checkItem.sparePartItem.name,
+            style: TextStyle(color: Colors.black),
+          ),
+          Spacer(),
+          Row(
+            children: viewModel.statuses
+                .map(
+                  (status) => Checkbox(
+                    value: checkItem.statusId == status.id,
+                    onChanged: (value) => viewModel.onValueChange(checkItem, status),
+                  ),
+                )
+                .toList(),
+          )
+        ],
+      ),
     );
   }
 }

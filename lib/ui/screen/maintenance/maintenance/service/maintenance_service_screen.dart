@@ -17,7 +17,10 @@ class MaintenanceServiceScreen extends BaseView<MaintenanceServiceScreenModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add, color: Colors.white,),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         onPressed: () => Get.bottomSheet(
           AddServiceBottomSheet(
             onConfirm: (serviceId, quantity) => viewModel.onAddService(serviceId, quantity),
@@ -36,7 +39,7 @@ class MaintenanceServiceScreen extends BaseView<MaintenanceServiceScreenModel> {
         ),
       ),
       body: RefreshIndicator(
-        onRefresh: () {},
+        onRefresh: () => viewModel.loadData(showLoading: false),
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16),
           physics: AlwaysScrollableScrollPhysics(),

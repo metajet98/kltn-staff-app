@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 import 'package:staff_maintenance_app/ui/base/base_view.dart';
 import 'package:staff_maintenance_app/ui/screen/profile/profile_screen_model.dart';
@@ -34,15 +35,15 @@ class ProfileScreen extends BaseView<ProfileScreenModel> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildInfoRow(Obx(() => Text("Mã nhân viên: ${viewModel.profile?.id ?? ""}"))),
+              _buildInfoRow(Obx(() => Text("Mã nhân viên: ${viewModel.profile?.id ?? ""}")), FontAwesome.user),
               SizedBox(height: 8),
-              _buildInfoRow(Obx(() => Text("Họ và tên: ${viewModel.profile?.fullName ?? ""}"))),
+              _buildInfoRow(Obx(() => Text("Họ và tên: ${viewModel.profile?.fullName ?? ""}")), Icons.book),
               SizedBox(height: 8),
-              _buildInfoRow(Obx(() => Text("Số điện thoại: ${viewModel.profile?.phoneNumber ?? ""}"))),
+              _buildInfoRow(Obx(() => Text("Số điện thoại: ${viewModel.profile?.phoneNumber ?? ""}")), Icons.phone),
               SizedBox(height: 8),
-              _buildInfoRow(Obx(() => Text("Địa chỉ: ${viewModel.profile?.address ?? ""}"))),
+              _buildInfoRow(Obx(() => Text("Địa chỉ: ${viewModel.profile?.address ?? ""}", overflow: TextOverflow.ellipsis)), Icons.home),
               SizedBox(height: 8),
-              _buildInfoRow(Obx(() => Text("Chi nhánh: ${viewModel.profile?.branch?.name ?? ""}"))),
+              _buildInfoRow(Obx(() => Text("Chi nhánh: ${viewModel.profile?.branch?.name ?? ""}")), Icons.map),
               SizedBox(height: 8),
             ],
           ),
@@ -51,13 +52,19 @@ class ProfileScreen extends BaseView<ProfileScreenModel> {
     );
   }
 
-  Widget _buildInfoRow(Widget child) {
+  Widget _buildInfoRow(Widget child, IconData icon) {
     return Material(
       borderRadius: BorderRadius.circular(5),
       elevation: 2,
       child: Container(
         padding: EdgeInsets.all(16),
-        child: child,
+        child: Row(
+          children: [
+            Icon(icon, color: Colors.blueAccent,),
+            SizedBox(width: 8),
+            Expanded(child: child),
+          ],
+        ),
       ),
     );
   }

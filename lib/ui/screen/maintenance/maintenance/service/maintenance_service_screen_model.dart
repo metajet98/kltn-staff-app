@@ -34,11 +34,11 @@ class MaintenanceServiceScreenModel extends BaseViewModel<MaintenanceServiceScre
     super.onInit();
   }
 
-  void loadData() {
-    call(() async {
+  Future loadData({bool showLoading = true}) {
+    return call(() async {
       await _loadMaintenance();
       await _loadBranchService();
-    }, toastOnError: true, background: false);
+    }, toastOnError: true, background: !showLoading);
   }
 
   Future _loadMaintenance() async {
@@ -48,6 +48,7 @@ class MaintenanceServiceScreenModel extends BaseViewModel<MaintenanceServiceScre
   Future _loadBranchService() async {
     _service.value =
         (await branchService.getBranchServices(branchId: maintenance.branch.id, vehicleGroupId: maintenance.userVehicle.vehicleGroupId)).data;
+    _service.value.removeWhere((element) => element.id == null || element.id == -1 || element.id == 0);
   }
 
   void onConfirm() {

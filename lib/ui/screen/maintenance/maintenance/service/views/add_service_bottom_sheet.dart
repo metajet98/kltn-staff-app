@@ -65,24 +65,22 @@ class _AddServiceBottomSheetState extends State<AddServiceBottomSheet> {
                             },
                           ),
                         ),
-                        SizedBox(width: 16),
-                        Expanded(
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            onChanged: (text) {
-                              quantity = int.tryParse(text);
-                            },
-                            decoration: InputDecoration(
-                                labelText: "Số lượng",
-                                border: new OutlineInputBorder(
-                                  gapPadding: 0,
-                                  borderRadius: const BorderRadius.all(const Radius.circular(20)),
-                                ),
-                                hintText: "Nhập số lượng",
-                                hintStyle: TextStyle(color: Colors.grey)),
-                          ),
-                        ),
                       ],
+                    ),
+                    SizedBox(height: 16),
+                    TextField(
+                      keyboardType: TextInputType.number,
+                      onChanged: (text) {
+                        quantity = int.tryParse(text);
+                      },
+                      decoration: InputDecoration(
+                        labelText: "Số lượng",
+                        border: new OutlineInputBorder(
+                          gapPadding: 0,
+                          borderRadius: const BorderRadius.all(const Radius.circular(20)),
+                        ),
+                        hintText: "Nhập số lượng",
+                        hintStyle: TextStyle(color: Colors.grey)),
                     ),
                     SizedBox(height: 16),
                     Row(

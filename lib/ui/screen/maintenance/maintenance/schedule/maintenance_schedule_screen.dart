@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:staff_maintenance_app/constaints/constaints.dart';
 import 'package:staff_maintenance_app/ui/base/base_view.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/schedule/maintenance_schedule_screen_model.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/schedule/views/add_schedule_bottom_sheet.dart';
@@ -18,6 +17,7 @@ class MaintenanceScheduleScreen extends BaseView<MaintenanceScheduleScreenModel>
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
         onPressed: () => Get.bottomSheet(
             AddScheduleBottomSheet(
                 onConfirm: (title, content, date, odo) => viewModel.onAddSchedule(title: title, content: content, odo: odo, date: date)),
