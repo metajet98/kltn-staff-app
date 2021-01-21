@@ -16,7 +16,8 @@ class MainScreen extends BaseView<MainScreenModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.settings_sharp), onPressed: () => Get.bottomSheet(InputUserVehicleBottomSheet(), isScrollControlled: true)),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.find_replace), onPressed: () => Get.bottomSheet(InputUserVehicleBottomSheet(), isScrollControlled: true)),
       body: SafeArea(
         child: PageView(
           onPageChanged: viewModel.onPageViewSnap,

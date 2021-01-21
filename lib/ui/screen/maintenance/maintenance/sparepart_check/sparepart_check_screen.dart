@@ -8,6 +8,7 @@ import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/sparepar
 
 class SparepartCheckScreen extends BaseView<SparepartCheckScreenModel> {
   static String routeName = "/SparepartCheckScreen";
+
   static void start({int maintenanceId}) => Get.to(SparepartCheckScreen(maintenanceId: maintenanceId));
 
   SparepartCheckScreen({int maintenanceId}) {
@@ -41,7 +42,8 @@ class SparepartCheckScreen extends BaseView<SparepartCheckScreenModel> {
           child: Column(
             children: [
               Obx(() => _buildStatusHeader(viewModel.statuses)),
-              Obx(() => Column(children: viewModel.checkListItems?.map((e) => _buildCheckListItem(e, viewModel.currentPositionElement == e))?.toList() ?? [])),
+              Obx(() => Column(
+                  children: viewModel.checkListItems?.map((e) => _buildCheckListItem(e, viewModel.currentPositionElement == e))?.toList() ?? [])),
               Obx(() => _buildStatusDescription(viewModel.statuses)),
               SizedBox(height: 16),
               FlatButton(
@@ -50,29 +52,12 @@ class SparepartCheckScreen extends BaseView<SparepartCheckScreenModel> {
                 ),
                 onPressed: () => viewModel.onConfirm(),
                 child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Text(
-                    "Tiếp tục",
-                    style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
-                  )),
+                    padding: EdgeInsets.all(12),
+                    child: Text(
+                      "Tiếp tục",
+                      style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+                    )),
                 color: Colors.green,
-              ),
-              Obx(
-                  () => Container(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  color: Theme.of(context).backgroundColor,
-                  child: Center(
-                    child: viewModel.speech.value.isListening == true
-                      ? Text(
-                      "I'm listening...",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )
-                      : Text(
-                      'Not listening',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
               ),
             ],
           ),
@@ -83,16 +68,16 @@ class SparepartCheckScreen extends BaseView<SparepartCheckScreenModel> {
 
   Widget _buildStatusHeader(List<Status> statuses) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: viewModel.statuses
-          ?.map(
-            (e) => Padding(
-              padding: EdgeInsets.symmetric(horizontal: 19),
-              child: Text(e.acronym),
-            ),
-          )
-          ?.toList() ?? []
-    );
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: viewModel.statuses
+                ?.map(
+                  (e) => Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 19),
+                    child: Text(e.acronym),
+                  ),
+                )
+                ?.toList() ??
+            []);
   }
 
   Widget _buildStatusDescription(List<Status> statuses) {

@@ -10,6 +10,15 @@ class HistoryScreen extends BaseView<HistoryScreenModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Lịch sử bảo dưỡng",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+          textAlign: TextAlign.center,
+        ),
+        elevation: 1,
+        backgroundColor: Colors.white,
+      ),
       body: Obx(
         () => RefreshIndicator(
           onRefresh: () => viewModel.loadHistory(showLoading: false),

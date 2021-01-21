@@ -17,7 +17,6 @@ import 'package:staff_maintenance_app/models/maintenance/status.dart';
 import 'package:staff_maintenance_app/ui/base/base_view_model.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/service/maintenance_service_screen.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/sparepart_check/sparepart_check_screen.dart';
-import 'package:hardware_buttons/hardware_buttons.dart';
 
 @injectable
 class SparepartCheckScreenModel extends BaseViewModel<SparepartCheckScreen> {
@@ -39,9 +38,6 @@ class SparepartCheckScreenModel extends BaseViewModel<SparepartCheckScreen> {
 
   SparepartCheckScreenModel(this.maintenanceService, this.vehicleService);
 
-  StreamSubscription _buttonSubscription;
-
-  final _hasSpeech = RxBool(false);
   final level = RxDouble(0.0);
   double minSoundLevel = 50000;
   double maxSoundLevel = -50000;
@@ -50,7 +46,6 @@ class SparepartCheckScreenModel extends BaseViewModel<SparepartCheckScreen> {
   final lastStatus = RxString();
   final _currentLocaleId = RxString();
   final resultListened = RxInt(0);
-  List<LocaleName> _localeNames = [];
   final speech = Rx<SpeechToText>(SpeechToText());
 
   FlutterTts flutterTts;
@@ -66,16 +61,7 @@ class SparepartCheckScreenModel extends BaseViewModel<SparepartCheckScreen> {
   void onInit() {
     loadData();
     initSpeechState();
-    _buttonSubscription = volumeButtonEvents.listen((event) {
-      print("volumeButtonEvents");
-    });
     super.onInit();
-  }
-
-  @override
-  void onDispose() {
-    _buttonSubscription?.cancel();
-    super.onDispose();
   }
 
   void loadData() {
@@ -107,8 +93,7 @@ class SparepartCheckScreenModel extends BaseViewModel<SparepartCheckScreen> {
     var result = List<SparePartDetail>.from(maintenance.sparePartCheckDetail);
     _sparePartItems.value.forEach((checkItem) {
       if (!result.any((element) => element.sparePartItemId == checkItem.id)) {
-        result.add(
-            SparePartDetail(maintenanceId: maintenanceId, sparePartItem: checkItem, sparePartItemId: checkItem.id));
+        result.add(SparePartDetail(maintenanceId: maintenanceId, sparePartItem: checkItem, sparePartItemId: checkItem.id));
       }
     });
     _checkListItems.value = result;
@@ -123,14 +108,11 @@ class SparepartCheckScreenModel extends BaseViewModel<SparepartCheckScreen> {
   void onConfirm() {
     var checkList = List<Map<String, dynamic>>();
     checkListItems.forEach((element) {
-      if(element.status == null) return;
-      checkList.add(<String, dynamic> {
-        "StatusId" : element.statusId,
-        "VehicleSparePartId": element.sparePartItem.id
-      });
+      if (element.status == null) return;
+      checkList.add(<String, dynamic>{"StatusId": element.statusId, "VehicleSparePartId": element.sparePartItem.id});
     });
-    var params = <String, dynamic> {
-      "SparePartMaintenanceChecks" : checkList,
+    var params = <String, dynamic>{
+      "SparePartMaintenanceChecks": checkList,
     };
     print(params);
 
@@ -144,7 +126,7 @@ class SparepartCheckScreenModel extends BaseViewModel<SparepartCheckScreen> {
     flutterTts = FlutterTts();
     final languages = await flutterTts.getLanguages;
     flutterTts.setLanguage("vi-VN");
-    if(Platform.isAndroid) {
+    if (Platform.isAndroid) {
       var engines = await flutterTts.getEngines;
       if (engines != null) {
         for (dynamic engine in engines) {
@@ -159,14 +141,14 @@ class SparepartCheckScreenModel extends BaseViewModel<SparepartCheckScreen> {
 
   Future startFlowAudio() async {
     var currentPosition = currentPositionElement != null ? checkListItems.indexOf(currentPositionElement) : 0;
-    for (int i = currentPosition; i < checkListItems.length; i++ ) {
+    for (int i = currentPosition; i < checkListItems.length; i++) {
       var element = checkListItems[i];
       _currentPositionElement.value = element;
       await speak(element.sparePartItem.name);
       var result = await startListening();
       print(result);
       onValueChange(element, statuses.firstWhere((element) => element.name.toLowerCase() == result.toLowerCase()));
-      if(i == checkListItems.length - 1) {
+      if (i == checkListItems.length - 1) {
         _currentPositionElement.nil();
         break;
       }
@@ -175,7 +157,7 @@ class SparepartCheckScreenModel extends BaseViewModel<SparepartCheckScreen> {
 
   Future speak(String _newVoiceText) async {
     print("speak: $_newVoiceText");
-    if(flutterTts == null) {
+    if (flutterTts == null) {
       await setUpTTS();
     }
 
@@ -188,30 +170,22 @@ class SparepartCheckScreenModel extends BaseViewModel<SparepartCheckScreen> {
   }
 
   Future<void> initSpeechState() async {
-    var hasSpeech = await speech.value.initialize(
-      onError: errorListener, onStatus: statusListener, debugLogging: true);
-    if (hasSpeech) {
-      _localeNames = await speech.value.locales();
-
-      var systemLocale = await speech.value.systemLocale();
-      _currentLocaleId.value = systemLocale.localeId;
-    }
-    _hasSpeech.value = hasSpeech;
+    await speech.value.initialize(onError: errorListener, onStatus: statusListener, debugLogging: true);
   }
 
   Future<String> startListening() async {
     var completer = Completer<String>();
     await speech.value.listen(
-      onResult: (result) {
-        completer.complete(result.recognizedWords);
-      },
-      listenFor: Duration(seconds: 5),
-      pauseFor: Duration(seconds: 5),
-      partialResults: false,
-      localeId: _currentLocaleId.value,
-      onSoundLevelChange: soundLevelListener,
-      cancelOnError: true,
-      listenMode: ListenMode.confirmation);
+        onResult: (result) {
+          completer.complete(result.recognizedWords);
+        },
+        listenFor: Duration(seconds: 5),
+        pauseFor: Duration(seconds: 5),
+        partialResults: false,
+        localeId: _currentLocaleId.value,
+        onSoundLevelChange: soundLevelListener,
+        cancelOnError: true,
+        listenMode: ListenMode.confirmation);
     return completer.future;
   }
 
