@@ -40,7 +40,7 @@ class ReceiveVehicleScreenModel extends BaseViewModel<ReceiveVehicleScreen> {
   String title;
 
   Future onAddImagePressed() async {
-    var pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+    var pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
     if(pickedFile == null) return;
     var file = File(pickedFile.path);
     call(() async {

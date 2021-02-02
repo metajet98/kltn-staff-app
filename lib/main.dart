@@ -46,5 +46,5 @@ void setupEasyLoading() {
     ..indicatorColor = Colors.blueAccent
     ..progressColor = Colors.blueAccent
     ..userInteractions = false
-    ..textColor = Colors.black.withAlpha(33);
+    ..textColor = Colors.black;
 }
