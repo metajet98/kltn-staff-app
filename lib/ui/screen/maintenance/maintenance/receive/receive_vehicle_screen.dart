@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:staff_maintenance_app/constaints/constaints.dart';
 import 'package:staff_maintenance_app/ui/base/base_view.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/receive/receive_vehicle_screen_model.dart';
+import 'package:staff_maintenance_app/ui/shared/preview_image/preview_image_page.dart';
 
 class ReceiveVehicleScreen extends BaseView<ReceiveVehicleScreenModel> {
   static void start({int userVehicleId}) => Get.to(ReceiveVehicleScreen(userVehicleId: userVehicleId));
@@ -207,9 +208,13 @@ class ReceiveVehicleScreen extends BaseView<ReceiveVehicleScreenModel> {
                 height: 50,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
-                  child: Image.network(
-                    e,
-                    fit: BoxFit.cover,
+                  child: GestureDetector(
+                    onTap: () => PreviewImagePage.start(imageUrl: e),
+                    onLongPress: () => viewModel.removeImage(e),
+                    child: Image.network(
+                      e,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),

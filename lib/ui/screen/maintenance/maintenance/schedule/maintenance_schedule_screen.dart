@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:staff_maintenance_app/ui/base/base_view.dart';
+import 'package:staff_maintenance_app/ui/screen/maintenance/info/maintenance_receive_info_bottom_sheet.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/schedule/maintenance_schedule_screen_model.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/schedule/views/add_schedule_bottom_sheet.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/schedule/views/schedule_view.dart';
@@ -32,6 +33,13 @@ class MaintenanceScheduleScreen extends BaseView<MaintenanceScheduleScreenModel>
           "3 Lịch hẹn",
           style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.info_outline,
+            ),
+            onPressed: () => MaintenanceReceiveInfoBottomSheet.show(viewModel.maintenance))
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () {},
@@ -50,6 +58,12 @@ class MaintenanceScheduleScreen extends BaseView<MaintenanceScheduleScreenModel>
                 ),
               ),
             ),
+            Obx(() {
+              if (viewModel.schedules?.isEmpty == true)
+                return Text("Chưa có lịch hẹn nào cả!");
+              else
+                return Container();
+            }),
             SizedBox(height: 16),
             FlatButton(
               shape: RoundedRectangleBorder(

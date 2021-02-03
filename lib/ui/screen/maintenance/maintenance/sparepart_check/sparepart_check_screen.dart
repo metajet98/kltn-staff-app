@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:staff_maintenance_app/models/maintenance/sparepart_detail.dart';
 import 'package:staff_maintenance_app/models/maintenance/status.dart';
 import 'package:staff_maintenance_app/ui/base/base_view.dart';
+import 'package:staff_maintenance_app/ui/screen/maintenance/info/maintenance_receive_info_bottom_sheet.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/sparepart_check/sparepart_check_screen_model.dart';
 
 class SparepartCheckScreen extends BaseView<SparepartCheckScreenModel> {
@@ -34,6 +35,13 @@ class SparepartCheckScreen extends BaseView<SparepartCheckScreenModel> {
           "1. Kiểm tra phụ tùng",
           style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.info_outline,
+              ),
+              onPressed: () => MaintenanceReceiveInfoBottomSheet.show(viewModel.maintenance))
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () {},

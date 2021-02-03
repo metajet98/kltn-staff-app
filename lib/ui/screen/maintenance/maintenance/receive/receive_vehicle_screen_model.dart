@@ -39,6 +39,11 @@ class ReceiveVehicleScreenModel extends BaseViewModel<ReceiveVehicleScreen> {
   String notes;
   String title;
 
+  void removeImage(String imageUrl) {
+    _images.removeWhere((element) => element == imageUrl);
+    _images.refresh();
+  }
+
   Future onAddImagePressed() async {
     var pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
     if(pickedFile == null) return;

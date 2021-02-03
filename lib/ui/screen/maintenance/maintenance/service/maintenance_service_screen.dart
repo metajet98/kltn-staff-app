@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:staff_maintenance_app/ui/base/base_view.dart';
+import 'package:staff_maintenance_app/ui/screen/maintenance/info/maintenance_receive_info_bottom_sheet.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/service/maintenance_service_screen_model.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/service/views/add_service_bottom_sheet.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/maintenance/service/views/bill_table_view.dart';
@@ -37,6 +38,13 @@ class MaintenanceServiceScreen extends BaseView<MaintenanceServiceScreenModel> {
           "2. Dịch vụ",
           style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.info_outline,
+              ),
+              onPressed: () => MaintenanceReceiveInfoBottomSheet.show(viewModel.maintenance))
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () => viewModel.loadData(showLoading: false),
@@ -48,6 +56,12 @@ class MaintenanceServiceScreen extends BaseView<MaintenanceServiceScreenModel> {
               Obx(() => BillTableView(
                     billDetails: viewModel.maintenanceBillDetail,
                   )),
+              Obx(() {
+                if (viewModel.maintenanceBillDetail?.isEmpty == true)
+                  return Text("Chưa có dịch vụ nào cả!");
+                else
+                  return Container();
+              }),
               SizedBox(height: 16),
               FlatButton(
                 shape: RoundedRectangleBorder(
