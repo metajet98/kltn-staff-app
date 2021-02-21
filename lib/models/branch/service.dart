@@ -22,8 +22,14 @@ class Service {
   @JsonKey(name: "serviceId")
   int serviceId;
 
+  @JsonKey(name: "warrantyPeriod")
+  int warrantyPeriod;
 
-  Service({this.id, this.name, this.description, this.laborCost, this.sparePartPrice, this.serviceId});
+  @JsonKey(name: "warrantyOdo")
+  int warrantyOdo;
+
+
+  Service({this.id, this.name, this.description, this.laborCost, this.sparePartPrice, this.serviceId, this.warrantyOdo, this.warrantyPeriod});
 
   factory Service.fromJson(Map<String, dynamic> json) => _$ServiceFromJson(json);
 

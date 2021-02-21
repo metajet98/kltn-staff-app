@@ -9,7 +9,7 @@ part of 'vehicle_service.dart';
 class _VehicleService implements VehicleService {
   _VehicleService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'http://192.168.0.100:5001/api';
+    baseUrl ??= 'http://192.168.0.101:5001/api';
   }
 
   final Dio _dio;

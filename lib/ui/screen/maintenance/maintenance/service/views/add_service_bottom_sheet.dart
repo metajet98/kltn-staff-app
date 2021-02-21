@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:staff_maintenance_app/generated/assets.gen.dart';
+import 'package:staff_maintenance_app/helpers/format_helper.dart';
 import 'package:staff_maintenance_app/models/branch/service.dart';
 import 'package:staff_maintenance_app/models/vehicle/vehicle.dart';
 import 'package:staff_maintenance_app/ui/screen/maintenance/user_vehicle_info/user_vehicle_detail_screen.dart';
@@ -18,7 +19,7 @@ class AddServiceBottomSheet extends StatefulWidget {
 
 class _AddServiceBottomSheetState extends State<AddServiceBottomSheet> {
 
-  int selectedServiceId;
+  final selectedService = Rx<Service>();
   int quantity;
 
   @override
@@ -46,7 +47,7 @@ class _AddServiceBottomSheetState extends State<AddServiceBottomSheet> {
                     Row(
                       children: [
                         Expanded(
-                          child: DropdownButtonFormField<int>(
+                          child: DropdownButtonFormField<Service>(
                             decoration: const InputDecoration(
                               labelText: "Chọn dịch vụ",
                               border: const OutlineInputBorder(
@@ -54,14 +55,14 @@ class _AddServiceBottomSheetState extends State<AddServiceBottomSheet> {
                                 gapPadding: 0,
                               ),
                             ),
-                            items: widget.services.map((company) {
-                              return new DropdownMenuItem<int>(
-                                value: company.id,
-                                child: new Text(company.name),
+                            items: widget.services.map((service) {
+                              return new DropdownMenuItem<Service>(
+                                value: service,
+                                child: new Text(service.name),
                               );
                             }).toList(),
-                            onChanged: (serviceId) {
-                              selectedServiceId = serviceId;
+                            onChanged: (service) {
+                              selectedService.value = service;
                             },
                           ),
                         ),
@@ -83,6 +84,8 @@ class _AddServiceBottomSheetState extends State<AddServiceBottomSheet> {
                         hintStyle: TextStyle(color: Colors.grey)),
                     ),
                     SizedBox(height: 16),
+                    Obx(() => serviceInfo(selectedService.value)),
+                    SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -91,13 +94,13 @@ class _AddServiceBottomSheetState extends State<AddServiceBottomSheet> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           onPressed: () {
-                            widget.onConfirm(selectedServiceId, quantity);
+                            widget.onConfirm(selectedService.value?.id, quantity);
                             Get.back();
                           },
                           child: Padding(
                               padding: EdgeInsets.all(12),
                               child: Text(
-                                "Tiếp tục",
+                                "Thêm dịch vụ",
                                 style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
                               )),
                           color: Colors.green,
@@ -143,6 +146,22 @@ class _AddServiceBottomSheetState extends State<AddServiceBottomSheet> {
           )
         ],
       ),
+    );
+  }
+
+  Widget serviceInfo(Service service) {
+    if(service == null) return Container();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Tên dịch vụ: ${service.name}"),
+        Text("Giá phụ tùng: ${FormatHelper.formatMoney(service.sparePartPrice ?? 0)}"),
+        Text("Giá nhân công: ${FormatHelper.formatMoney(service.laborCost ?? 0)}"),
+        if(service.warrantyPeriod != null)
+          Text("Thời gian bảo hành (tháng): ${service.warrantyPeriod ?? 0}"),
+        if(service.warrantyPeriod != null)
+          Text("Số km bảo hành: ${service.warrantyOdo ?? 0}"),
+      ],
     );
   }
 }

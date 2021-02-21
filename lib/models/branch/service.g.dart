@@ -14,6 +14,8 @@ Service _$ServiceFromJson(Map<String, dynamic> json) {
     laborCost: json['laborCost'] as int,
     sparePartPrice: json['sparePartPrice'] as int,
     serviceId: json['serviceId'] as int,
+    warrantyOdo: json['warrantyOdo'] as int,
+    warrantyPeriod: json['warrantyPeriod'] as int,
   );
 }
 
@@ -24,4 +26,6 @@ Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
       'laborCost': instance.laborCost,
       'sparePartPrice': instance.sparePartPrice,
       'serviceId': instance.serviceId,
+      'warrantyPeriod': instance.warrantyPeriod,
+      'warrantyOdo': instance.warrantyOdo,
     };

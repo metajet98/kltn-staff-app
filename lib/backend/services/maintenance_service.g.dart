@@ -9,7 +9,7 @@ part of 'maintenance_service.dart';
 class _MaintenanceService implements MaintenanceService {
   _MaintenanceService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'http://192.168.0.100:5001/api/maintenance';
+    baseUrl ??= 'http://192.168.0.101:5001/api/maintenance';
   }
 
   final Dio _dio;
